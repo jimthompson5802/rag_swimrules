@@ -72,3 +72,6 @@ cover/
 # Operating System
 .DS_Store
 Thumbs.db
+
+# data
+raw_data/
