@@ -6,5 +6,7 @@ jupyter
 pytest
 langchain
 langchain-openai
+langchain-chroma
 openai
 chromadb
+pypdf
