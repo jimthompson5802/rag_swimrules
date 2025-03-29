@@ -6,6 +6,8 @@ The `rag_swimrules` project is a retrieval-augmented generation testbed designed
 ## Project Structure
 ```
 rag_swimrules
+|-- raw_data/
+|-- db/
 ├── notebooks
 │   └── chatbot_test.ipynb
 ├── src
@@ -24,6 +26,10 @@ rag_swimrules
 To set up the project, clone the repository and install the required dependencies. You can do this by running:
 
 ```bash
+# install duckdb using homebrew for local persistence
+brew install duckdb
+
+# install the required dependencies
 pip install -r requirements.txt
 ```
 
