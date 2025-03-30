@@ -15,8 +15,8 @@ selected_pages = [page for page in pages if 13 <= page.metadata['page'] <= 27]
 
 # Configure text splitting with overlap
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=2000,
-    chunk_overlap=200,
+    chunk_size=500,
+    chunk_overlap=100,
     separators=["\n\n", "\n", " ", ""],  # Default hierarchy
     length_function=len,
     is_separator_regex=False    
