@@ -3,6 +3,7 @@ torch
 numpy
 pandas
 jupyter
+ipykernel
 pytest
 langchain
 langchain-openai
