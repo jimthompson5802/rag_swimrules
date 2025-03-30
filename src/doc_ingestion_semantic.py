@@ -41,6 +41,15 @@ glossary_chunks = glossary_text_splitter.create_documents(
     metadatas=[{"source": "glossary_terms.txt", "page": 0}],
 )
 
+with open("./raw_data/stroke_interpretations.txt", "r", encoding="utf-8") as file:
+    stroke_interpretations_text = file.read()
+
+stroke_interpretations_chunks = glossary_text_splitter.create_documents(
+    [stroke_interpretations_text],
+    metadatas=[{"source": "stroke_interepreations.txt", "page": 0}],
+)
+
+
 # Initialize embeddings model
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 
@@ -49,7 +58,7 @@ shutil.rmtree(VECTORDB_DIR, ignore_errors=True)
 
 # Create vector store with chunks
 vector_store = Chroma.from_documents(
-    rule_chunks + glossary_chunks,
+    rule_chunks + glossary_chunks + stroke_interpretations_chunks,
     embeddings,
     persist_directory=VECTORDB_DIR
 )
