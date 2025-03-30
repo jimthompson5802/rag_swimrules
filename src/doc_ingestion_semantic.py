@@ -3,67 +3,75 @@ import shutil
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_experimental.text_splitter import SemanticChunker
-from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_chroma.vectorstores import Chroma
 
+RULEBOOK_FP = "./raw_data/2025-mini-rulebook.pdf"
 VECTORDB_DIR = "./db/swim_rules_semantic"
-
-# Load PDF with selected pages (e.g., pages 10-15)
-loader = PyPDFLoader("raw_data/2025-mini-rulebook.pdf")
-pages = loader.load()
-
-# Filter selected pages (0-indexed)
-selected_pages = [page for page in pages if 21 <= page.metadata['page'] <= 27]
-
-# Configure text splitting for the pdf technical rules
-rule_text_splitter = SemanticChunker(
-    OpenAIEmbeddings(model="text-embedding-3-small"),
-    breakpoint_threshold_type="standard_deviation",
-    breakpoint_threshold_amount=3,
-)
-
-# Split selected pages into chunks
-rule_chunks = rule_text_splitter.split_documents(selected_pages)
-
-# Configure text splitting glossary terms
-glossary_text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=200,
-    chunk_overlap=20,
-    length_function=len,
-)
-
-with open("./raw_data/glossary_terms.txt", "r", encoding="utf-8") as file:
-    glossary_text = file.read()
-
-glossary_chunks = glossary_text_splitter.create_documents(
-    [glossary_text],
-    metadatas=[{"source": "glossary_terms.txt", "page": 0}],
-)
-
-with open("./raw_data/stroke_interpretations.txt", "r", encoding="utf-8") as file:
-    stroke_interpretations_text = file.read()
-
-stroke_interpretations_chunks = glossary_text_splitter.create_documents(
-    [stroke_interpretations_text],
-    metadatas=[{"source": "stroke_interepreations.txt", "page": 0}],
-)
+GLOSSARY_FP = "./raw_data/glossary_terms.txt"
+GUIDANCE_FP = "./raw_data/interpretation_guidance.txt"
 
 
-# Initialize embeddings model
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+def main():
+    # Load PDF with selected pages (e.g., pages 10-15)
+    loader = PyPDFLoader(RULEBOOK_FP)
+    pages = loader.load()
 
-# remove old db
-shutil.rmtree(VECTORDB_DIR, ignore_errors=True)
+    # Filter selected pages (0-indexed)
+    selected_pages = [page for page in pages if 21 <= page.metadata['page'] <= 27]
 
-# Create vector store with chunks
-vector_store = Chroma.from_documents(
-    rule_chunks + glossary_chunks + stroke_interpretations_chunks,
-    embeddings,
-    persist_directory=VECTORDB_DIR
-)
+    # Configure text splitting for the pdf technical rules
+    rule_text_splitter = SemanticChunker(
+        OpenAIEmbeddings(model="text-embedding-3-small"),
+        breakpoint_threshold_type="standard_deviation",
+        breakpoint_threshold_amount=3,
+    )
 
-# Example RAG query
-results = vector_store.similarity_search("What is breaststroke", k=3)
-for doc in results:
-    print(f"Page {doc.metadata['page']}: {doc.page_content[:100]}...")
+    # Split selected pages into chunks
+    rule_chunks = rule_text_splitter.split_documents(selected_pages)
+
+    # Configure text splitting glossary terms
+    glossary_text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=200,
+        chunk_overlap=20,
+        length_function=len,
+    )
+
+    with open(GLOSSARY_FP, "r", encoding="utf-8") as file:
+        glossary_text = file.read()
+
+    # configure the interpretation guidance text splitter
+    glossary_chunks = glossary_text_splitter.create_documents(
+        [glossary_text],
+        metadatas=[{"source": GLOSSARY_FP, "page": 0}],
+    )
+
+    with open(GUIDANCE_FP, "r", encoding="utf-8") as file:
+        stroke_interpretations_text = file.read()
+
+    stroke_interpretations_chunks = glossary_text_splitter.create_documents(
+        [stroke_interpretations_text],
+        metadatas=[{"source": GUIDANCE_FP, "page": 0}],
+    )
+
+    # Initialize embeddings model
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+
+    # remove old db
+    shutil.rmtree(VECTORDB_DIR, ignore_errors=True)
+
+    # Create vector store with chunks
+    vector_store = Chroma.from_documents(
+        rule_chunks + glossary_chunks + stroke_interpretations_chunks,
+        embeddings,
+        persist_directory=VECTORDB_DIR
+    )
+
+    # Example RAG query
+    results = vector_store.similarity_search("What is breaststroke", k=3)
+    for doc in results:
+        print(f"Page {doc.metadata['page']}: {doc.page_content[:100]}...")
+
+if __name__ == "__main__":
+    main()
