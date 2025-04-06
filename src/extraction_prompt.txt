@@ -1,0 +1,50 @@
+From the attached document create a json list of dictionaries.  
+
+Instructions:
+1. Each dictionary should represent a single situation described in the document. 
+2. A situation can be identified by the presence of numerice number followed by a period (e.g., 1., 2., 3., etc.) at the beginning of a line.
+3. Create the dictionary from each situation, extract the following fields:
+   - "situation_id": The numeric identifier of the situation (e.g., 1, 2, 3, etc.).
+   - "prompt": The text of the situation.
+   - "target": The text identified with "Recommended resoluion:" or "Recommended Resolution:".
+   - "rule": Thhe text idenfied with "Applicable rule:"
+4. Ouput the list of dictionaries in JSON format.
+5. Ensure that the JSON is properly formatted and valid.
+6. Do not include any additional text or explanation, just the JSON output.
+7. If any of the fields are missing in a situation, exclude that situation from the output.
+8. If the situation does not contain a numeric identifier, exclude it from the output.
+9. If the situation does not contain a "Recommended resolution:" or "Recommended Resolution:", exclude it from the output.
+10. If the situation does not contain an "Applicable rule:", exclude it from the output.
+
+EXAMPLE SITUATIONS:
+1. A customer is unhappy with the service they received at a restaurant. They feel that the staff was rude and unhelpful. 
+   Recommended resolution: Apologize to the customer and offer a discount on their next visit.
+   Applicable rule: Customer service standards.
+2. A student is struggling with their homework and asks for help from a teacher. The teacher provides additional resources and support.
+   Recommended resolution: Provide the student with extra tutoring sessions.
+   Applicable rule: Educational support policies.
+3. A patient is dissatisfied with the care they received at a hospital. They feel that their concerns were not taken seriously.
+   Recommended resolution: Investigate the patient's concerns and provide a formal apology.
+   Applicable rule: Patient care standards.
+
+EXAMPLE OUTPUT:
+[
+    {
+        "situation_id": 1,
+        "prompt": "A customer is unhappy with the service they received at a restaurant. They feel that the staff was rude and unhelpful.",
+        "target": "Apologize to the customer and offer a discount on their next visit.",
+        "rule": "Customer service standards."
+    },
+    {
+        "situation_id": 2,
+        "prompt": "A student is struggling with their homework and asks for help from a teacher. The teacher provides additional resources and support.",
+        "target": "Provide the student with extra tutoring sessions.",
+        "rule": "Educational support policies."
+    },
+    {
+        "situation_id": 3,
+        "prompt": "A patient is dissatisfied with the care they received at a hospital. They feel that their concerns were not taken seriously.",
+        "target": "Investigate the patient's concerns and provide a formal apology.",
+        "rule": "Patient care standards."
+    }
+]
