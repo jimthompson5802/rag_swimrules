@@ -9,6 +9,10 @@ Rules used in this test is based on Article 101 in [USA Swimming 2025 mini-ruleb
 
 `interpretation_guidance.txt` contains guidance on how to apply the technical rules.  Manually created.
 
+`swimming_situations.json` contains the swimming situations.  Manually created from downloaded copy of [situations and resolution document](https://www.pvswim.org/official/rules/2025-03-situations-and-resolutions-stroke-and-turn.pdf).
+
+`swimming_situations2.json` contains the swimming situations.  Manually created from downloaded copy of [situations and resolution document](https://www.pvswim.org/official/rules/2025-03-situations-and-resolutions-stroke-and-turn.pdf) with the assistance of ChatGPT using the following [prompt](src/extraction_prompt.txt).
+
 ## Project Structure
 Collecting workspace information`@workspace` accuracy and speed can be improved by building a remote workspace index. [Learn More](https://aka.ms/vscode-copilot-workspace-remote-index)
 
@@ -17,65 +21,47 @@ Build remote workspace index
 Here’s a clear and concise project structure documentation for your README.md file:
 
 ### Project Structure
-GHCP prompot for generating project structure documentation:
+GHCP prompt for generating project structure documentation:
 ```plaintext
-@workspace Generate a clear and concise project structure documentation for a README.md file. Include:  
+@workspace in the repo generate a clear and concise project structure documentation for a README.md file. Include:  
 - A hierarchical folder/file structure with brief descriptions of each component  
-- Key files (e.g., `src/`, `config/`, `tests/`) and their purposes  
+- Key files (e.g., `src/`, `config/`, `tests/`) and their purposes
+- for files in src/ folder, include a brief description of the main functionality of each file
 - A markdown table summarizing the structure for readability  
 - Optional: Highlight critical files (e.g., `main.js`, `package.json`)  
-Format the output as a bulleted list with indents for subfolders and a table for quick reference.  
+Format the output as a bulleted list with indents for subfolders.
 ```
+
 Collecting workspace informationHere’s a clear and concise project structure documentation for your README.md file:
 
-### Project Structure
-
 #### Hierarchical Folder/File Structure
-- **`.env`**: Environment variables for the project.
-- **`.gitignore`**: Specifies files and directories to be ignored by Git.
+- **.env**: Environment variables for the project.
+- **.gitignore**: Specifies files and directories to be ignored by Git.
 - **LICENSE**: License information for the project.
-- **`README.md`**: Project documentation.
-- **`requirements.txt`**: Python dependencies for the project.
-- **`.vscode/`**: VS Code-specific settings.
-  - **`settings.json`**: Configuration for the VS Code workspace.
-- **db**: Contains database files.
-  - **`swim_rules/`**: Stores rule-related database files.
-    - **`chroma.sqlite3`**: SQLite database for swim rules.
-  - **`swim_rules_semantic/`**: Stores semantic rule-related database files.
-    - **`chroma.sqlite3`**: SQLite database for semantic swim rules.
-- **notebooks**: Jupyter notebooks for testing and experimentation.
-  - **`chatbot_test.ipynb`**: Notebook for chatbot testing.
-  - **`chunk_retrieval_testbed.ipynb`**: Notebook for chunk retrieval experiments.
-- **raw_data**: Contains raw input data files.
-  - **`2025-mini-rulebook.pdf`**: PDF document of the mini rulebook.
-  - **`glossary_terms.txt`**: Glossary of terms.
-  - **`interpretation_guidance.txt`**: Guidance for interpreting rules.
-- **sandbox**: Experimental notebooks and scripts.
-  - **`chunk_relevence_testbed.ipynb`**: Notebook for testing chunk relevance.
-  - **`show_chunks.ipynb`**: Notebook for displaying chunks.
-- **src**: Source code for the project.
-  - **`__init__.py`**: Marks the directory as a Python package.
-  - **`doc_ingestion.py`**: Create VectorStore using RecursiveCharacterTextSplitter.
-  - **`doc_ingestion_semantic.py`**: Create VectorStore using SemanticChunker.
-  - **`pdf_read_test.ipynb`**: Notebook for testing PDF reading.
-
-#### Summary Table
-
-| File/Folder              | Description                                      |
-|--------------------------|--------------------------------------------------|
-| .env                   | Environment variables for the project.          |
-| .gitignore             | Files/directories ignored by Git.               |
-| LICENSE                | License information.                            |
-| README.md              | Project documentation.                          |
-| requirements.txt       | Python dependencies.                            |
-| settings.json  | VS Code workspace settings.                     |
-| swim_rules         | Rule-related database files.                    |
-| swim_rules_semantic| Semantic rule-related database files.           |
-| notebooks             | Jupyter notebooks for testing and experiments.  |
-| raw_data              | Raw input data files.                           |
-| sandbox               | Experimental notebooks and scripts.             |
-| src                   | Source code for the project.                    |
-
+- **README.md**: Documentation and overview of the project.
+- **requirements.txt**: Python dependencies required for the project.
+- **.vscode/**: Configuration files for Visual Studio Code.
+  - **settings.json**: Workspace-specific settings for VS Code.
+- **db/**: Contains database-related files.
+  - **swim_rules/**: Rules related to swimming.
+  - **swim_rules_semantic/**: Semantic rules for swimming.
+  - **swim_rules_techrules/**: Technical rules for swimming.
+- **notebooks/**: Jupyter notebooks for analysis and testing.
+  - **analyze_test_results.ipynb**: Notebook for analyzing test results.
+  - **chatbot_test_target_responses.ipynb**: Tests chatbot responses against target outputs.
+  - **chatbot_test.ipynb**: General chatbot testing notebook.
+  - **chunk_retrieval_testbed.ipynb**: Testbed for chunk retrieval functionality.
+- **raw_data/**: Raw data files used in the project.
+  - **2025-03-situations-and-resolutions-stroke-and-turn.pdf**: Document on stroke and turn situations.
+  - **2025-mini-rulebook.pdf**: Mini rulebook for swimming.
+  - **glossary_terms.txt**: Glossary of terms used in the project.
+  - **interpretation_guidance.txt**: Guidance for interpreting rules.
+  - **swimming_situations.json**: JSON file with swimming situations data.
+  - **swimming_situations2.json**: Additional swimming situations data.
+  - **technical_rules/**: Contains technical rules data.
+- **results/**: Directory for storing results of analyses or tests.
+- **sandbox/**: Experimental or temporary files for testing purposes.
+- **src/**: Source code for the project.
 
 
 ## Installation

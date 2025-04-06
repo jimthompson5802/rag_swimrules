@@ -7,7 +7,7 @@ Instructions:
    - "situation_id": The numeric identifier of the situation (e.g., 1, 2, 3, etc.).
    - "prompt": The text of the situation.
    - "target": The text identified with "Recommended resoluion:" or "Recommended Resolution:".
-   - "rule": Thhe text idenfied with "Applicable rule:"
+   - "rule": The text idenfied with "Applicable rule:"
 4. Ouput the list of dictionaries in JSON format.
 5. Ensure that the JSON is properly formatted and valid.
 6. Do not include any additional text or explanation, just the JSON output.
