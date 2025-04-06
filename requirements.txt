@@ -9,6 +9,7 @@ langchain
 langchain-experimental
 langchain-openai
 langchain-chroma
+matplotlib
 openai
 openevals
 chromadb
