@@ -81,3 +81,4 @@ results/
 
 # exceptions
 !raw_data/interpretation_guidance.txt
+!raw_data/swimming_situations2.json
