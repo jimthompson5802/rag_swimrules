@@ -74,6 +74,10 @@ cover/
 Thumbs.db
 
 # data
-raw_data/
+raw_data/*
 db/
 results/
+
+
+# exceptions
+!raw_data/interpretation_guidance.txt
