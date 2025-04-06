@@ -47,13 +47,13 @@ def main():
         metadatas=[{"source": GLOSSARY_FP, "page": 0}],
     )
 
-    with open(GUIDANCE_FP, "r", encoding="utf-8") as file:
-        stroke_interpretations_text = file.read()
+    # with open(GUIDANCE_FP, "r", encoding="utf-8") as file:
+    #     stroke_interpretations_text = file.read()
 
-    stroke_interpretations_chunks = glossary_text_splitter.create_documents(
-        [stroke_interpretations_text],
-        metadatas=[{"source": GUIDANCE_FP, "page": 0}],
-    )
+    # stroke_interpretations_chunks = glossary_text_splitter.create_documents(
+    #     [stroke_interpretations_text],
+    #     metadatas=[{"source": GUIDANCE_FP, "page": 0}],
+    # )
 
     # Initialize embeddings model
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
@@ -63,7 +63,7 @@ def main():
 
     # Create vector store with chunks
     vector_store = Chroma.from_documents(
-        rule_chunks + glossary_chunks + stroke_interpretations_chunks,
+        rule_chunks + glossary_chunks, # + stroke_interpretations_chunks,
         embeddings,
         persist_directory=VECTORDB_DIR
     )

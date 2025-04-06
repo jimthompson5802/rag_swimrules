@@ -55,20 +55,20 @@ def main():
         metadatas=[{"source": GLOSSARY_FP, "page": 0}],
     )
 
-    with open(GUIDANCE_FP, "r", encoding="utf-8") as file:
-        stroke_interpretations_text = file.read()
+    # with open(GUIDANCE_FP, "r", encoding="utf-8") as file:
+    #     stroke_interpretations_text = file.read()
 
-    stroke_interpretations_chunks = glossary_text_splitter.create_documents(
-        [stroke_interpretations_text],
-        metadatas=[{"source": GUIDANCE_FP, "page": 0}],
-    )
+    # stroke_interpretations_chunks = glossary_text_splitter.create_documents(
+    #     [stroke_interpretations_text],
+    #     metadatas=[{"source": GUIDANCE_FP, "page": 0}],
+    # )
 
     # remove old db
     shutil.rmtree(VECTORDB_DIR, ignore_errors=True)
 
     # Create vector store with chunks
     vector_store = Chroma.from_documents(
-        glossary_chunks + stroke_interpretations_chunks,
+        glossary_chunks, #+ stroke_interpretations_chunks,
         embeddings,
         persist_directory=VECTORDB_DIR
     )
